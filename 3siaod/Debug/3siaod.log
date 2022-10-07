@@ -1,0 +1,10 @@
+﻿  main.cpp
+C:\Users\TravelMate\source\repos\3siaod\BinaryWithHash.h(54,32): warning C4018: '<': signed/unsigned mismatch
+C:\Users\TravelMate\source\repos\3siaod\BinaryWithHash.h(58,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\TravelMate\source\repos\3siaod\BinaryWithHash.h(95,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\TravelMate\source\repos\3siaod\BinaryWithHash.h(165,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\TravelMate\source\repos\3siaod\BinaryWithHash.h(163,6): warning C4101: 'index': unreferenced local variable
+C:\Users\TravelMate\source\repos\3siaod\BinarFileWithHash.h(26,16): warning C4101: 'company': unreferenced local variable
+C:\Users\TravelMate\source\repos\3siaod\BinarFileWithHash.h(63,6): warning C4101: 'index': unreferenced local variable
+C:\Users\TravelMate\source\repos\3siaod\SecondTask.h(133): warning C4172: returning address of local variable or temporary: companyObject
+  3siaod.vcxproj -> C:\Users\TravelMate\source\repos\3siaod\Debug\3siaod.exe
