@@ -139,9 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BalancedSearchTree.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AVLTree.h" />
     <ClInclude Include="BalancedSearchTree.h" />
     <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="ControlFIleModule.h" />

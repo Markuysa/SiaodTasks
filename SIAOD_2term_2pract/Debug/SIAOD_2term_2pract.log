@@ -1,5 +1,0 @@
-﻿  Main.cpp
-C:\Users\TravelMate\source\repos\SIAOD_2term_2pract\FirstTask.h(87,19): warning C4101: 'result': unreferenced local variable
-C:\Users\TravelMate\source\repos\SIAOD_2term_2pract\Main.cpp(35,13): warning C4326: return type of 'main' should be 'int' instead of 'void'
-C:\Users\TravelMate\source\repos\SIAOD_2term_2pract\FirstTask.h(133): warning C4715: 'findNumber': not all control paths return a value
-  SIAOD_2term_2pract.vcxproj -> C:\Users\TravelMate\source\repos\SIAOD_2term_2pract\Debug\SIAOD_2term_2pract.exe
