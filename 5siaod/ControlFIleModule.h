@@ -9,14 +9,7 @@ struct company_struct {
 	char founder[30];
 
 };
-int addObjectToFile(string& nameOfFile) {
-	company_struct companyObject;
-	cout << "Input license: ";
-	cin >> companyObject.license;
-	cout << "Input name: ";
-	cin >> companyObject.company_name;
-	cout << "Input founder: ";
-	cin >> companyObject.founder;
+int addObjectToFile(string& nameOfFile,company_struct companyObject) {
 	ofstream file(nameOfFile, ios::app,ios::binary);
 	if (file.is_open()) {
 		file.write((char*)&companyObject, sizeof(company_struct));
@@ -81,6 +74,7 @@ string convertChar(char* license) {
 	}
 	return result;
 }
+
 
 void printObject(company_struct* companyObject) {
 	string license = convertChar(companyObject->license);

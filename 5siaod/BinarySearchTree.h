@@ -13,7 +13,9 @@ struct TreeNode {
 		this->left = left;
 		this->filePosition = filePosition;
 	}
+	TreeNode();
 };
+
 class binarySearchTree {
 	TreeNode* root = nullptr;
 	int count_elements = 0;
@@ -26,8 +28,9 @@ public:
 		return this->root;
 	}
 	TreeNode* searchElement(TreeNode* root, string& key);
-
+	int getCountOfELements() { return this->count_elements; }
 };
+
 bool isExist(TreeNode* root, string& keyValue) {
 
 	if (root == nullptr) return false;
@@ -47,93 +50,43 @@ void binarySearchTree::buildFromFile(TreeNode* root ,string& nameOfFile){
 }
 TreeNode* binarySearchTree::addItem(TreeNode* &root, company_struct* insertObject,int position) {
 	
-	string key = convertChar(insertObject->license);
+	string key(insertObject->license);
 	if (isExist(root, key)) return root;
 	if (root == nullptr) {
 		root = createRoot(key,position);
 		return root;
 	}
-	count_elements++;
+
+	if (root->key < insertObject->license) root->left = addItem(root->left, insertObject, position++);
+	if (root->key > insertObject->license) root->right = addItem(root->right, insertObject, position++);
 	this->root = root;
+	this->count_elements = position;
 	return root;
 }
-
 TreeNode* binarySearchTree::searchElement(TreeNode* root, string& key) {
-	
-	if (root->key < key) 
-		searchElement(root->left, key);
-	if (root->key > key)
-		searchElement(root->right, key);
+	//fix this (doesn't work if)
+	if (root == nullptr) return nullptr;
 	if (root->key == key)
 		return root;
-	return nullptr;
-
+	if (root->key < key) 
+		return searchElement(root->left, key);
+	if (root->key > key)
+		return searchElement(root->right, key);
+	return root;
+}
+void printTreeObject(TreeNode* object) {
+	
+	cout << "Position in file: " << object->filePosition << '\n'
+		<< "Key: " << object->key << endl;
 }
 
-//Branch* del_elem(Branch*& aBranch, int aData) {
-//
-//	if (aBranch == NULL)
-//
-//		return aBranch;
-//
-//	if (aData == aBranch->Data) {
-//
-//		Branch* tmp;
-//
-//		if (aBranch->RightBranch == NULL)
-//
-//			tmp = aBranch->LeftBranch;
-//
-//		else {
-//
-//			Branch* ptr = aBranch->RightBranch;
-//
-//			if (ptr->LeftBranch == NULL) {
-//
-//				ptr->LeftBranch = aBranch->LeftBranch;
-//
-//				tmp = ptr;
-//
-//			}
-//
-//			else {
-//
-//				Branch* pmin = ptr->LeftBranch;
-//
-//				while (pmin->LeftBranch != NULL) {
-//
-//					ptr = pmin;
-//
-//					pmin = ptr->LeftBranch;
-//
-//				}
-//
-//				ptr->LeftBranch = pmin->RightBranch;
-//
-//				pmin->LeftBranch = aBranch->LeftBranch;
-//
-//				pmin->RightBranch = aBranch->RightBranch;
-//
-//				tmp = pmin;
-//
-//			}
-//
-//		}
-//
-//		delete aBranch;
-//
-//		return tmp;
-//
-//	}
-//
-//	else if (aData < aBranch->Data)
-//
-//		aBranch->LeftBranch = del_elem(aBranch->LeftBranch, aData);
-//
-//	else
-//
-//		aBranch->RightBranch = del_elem(aBranch->RightBranch, aData);
-//
-//	return aBranch;
-//
-//}
+void outputTree(TreeNode* p, int level)
+{
+	if (p)
+	{
+		outputTree(p->left, level + 1);
+		for (int i = 0; i < level; i++) cout << "   ";
+		cout << p->key << endl;
+		outputTree(p->right, level + 1);
+	}
+}

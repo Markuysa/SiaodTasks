@@ -1,6 +1,14 @@
 #pragma once
 #include "BinarySearchTree.h"
 
+int height(TreeNode* currentNode) {
+	int leftHeight, rightHeight, heightTree = 0;
+	if (currentNode == nullptr) return heightTree;
+	leftHeight = height(currentNode->left);
+	rightHeight = height(currentNode->right);
+	heightTree = max(leftHeight, rightHeight) + 1;
+	return heightTree;
+}
 
 class balansedSearchTree {
 	
@@ -8,16 +16,16 @@ class balansedSearchTree {
 	int count_elements = 0;
 public:
 	TreeNode* addItem(TreeNode*& root, company_struct* insertObject);
-	void printTree(TreeNode* root, Trunk* prev, bool isLeft);
 	TreeNode* buildFromFile(TreeNode* root, string& nameOfFile,int size,int position);
+
 	TreeNode* getRoot() { return root; };
 	void setRoot(TreeNode* root) { this->root = root; };
 	TreeNode* createRoot(string& license) {
 		this->root = new TreeNode(license, nullptr, nullptr, 0);
 		return this->root;
 	}
-	TreeNode* searchElement(TreeNode* root, string& key);
 
+	TreeNode* searchElement(TreeNode* root, string& key);
 };
 
 TreeNode* balansedSearchTree::buildFromFile(TreeNode* root, string& nameOfFile,int size,int position) {
@@ -40,26 +48,27 @@ TreeNode* balansedSearchTree::buildFromFile(TreeNode* root, string& nameOfFile,i
 
 	return root;
 }
-void outputTree(TreeNode *p, int level)
-{
-	if (p)
-	{
-		outputTree(p->left, level + 1);
-		for (int i = 0; i < level; i++) cout << "   ";
-		cout << p->key << endl;
-		outputTree(p->right, level + 1);
-	}
-}
+
 TreeNode* balansedSearchTree::addItem(TreeNode*& root, company_struct* insertObject) {
 	string key = convertChar(insertObject->license);
 	if (isExist(root, key)) return root;
 	if (root == nullptr) {
 		root = createRoot(key);
+		this->count_elements++;
 		return root;
 	}
-	if (root->key < key) root->left = addItem(root->left, insertObject);
-	if (root->key > key) root->right = addItem(root->right, insertObject);
+	int left = height(root->left),right= height(root->right);
+	if (left - right == 1) root->right = addItem(root->right, insertObject);
+	if (right - left == 1) root->left = addItem(root->left, insertObject);
+	if (right - left == 0) root->left = addItem(root->left, insertObject);
 	this->root = root;
+	this->count_elements++;
 	return root;
+}
+
+
+TreeNode* balansedSearchTree::searchElement(TreeNode* root, string& key) {
+	// implement BFS 
+	return nullptr;
 }
 

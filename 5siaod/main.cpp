@@ -1,4 +1,4 @@
-#include "AVLTree.h"
+#include "Tests.h"
 void printMenu(bool condition)
 {
 	if (condition) {
@@ -6,32 +6,38 @@ void printMenu(bool condition)
 			"Theme: Expression tree.\n"
 			"~-~-~-~-~-~-~-~-~-~-~-~-~-~-~MENU~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n";
 	}
-	cout << "/------------------------FIRST-TASK-------------------------/\n";
+	cout << "/------------------------FILES-------------------------/\n";
 	cout << "Enter [1] to create a binary file from text file\n"
 		<< "Enter [2] to start linear search by the key.\n"
 		<< "Enter [3] to print an object from the file by index(pointer).\n"
 		<< "Enter [4] to add an object to the file.\n"
 		<< "Enter [5] to print your binary file.\n";
-	cout << "/------------------------Second-TASK-------------------------/\n";
-	cout << "Enter [6] to build a tree from file.\n"
+	cout << "/------------------------BINARY-TREE-------------------------/\n";
+	cout << "Enter [6] to build a tree from binary file.\n"
 		<< "Enter [7] to add an object to the tree.\n"
 		<< "Enter [8] to search an object by the key.\n"
 		<< "Enter [9] to delete an object from the tree\n"
 		<< "Enter [10] to print the tree\n";
-	cout << "/------------------------THIRD-TASK-------------------------/\n";
-	cout << "Enter [11] to create a balansed tree\n"
-		<< "Enter [12] to input an expression in postfix notation.\n"
-		<< "Enter [13] to build a tree.\n"
-		<< "Enter [14] to print the tree.\n"
-		"Enter [0] to exit\n";
+	cout << "/------------------------AVL-TREE-------------------------/\n";
+	cout << "Enter [11] to create an AVL tree from binary file\n"
+		<< "Enter [12] to add an object to the tree.\n"
+		<< "Enter [13] to search an element by key.\n"
+		<< "Enter [14] to delete an object from the tree\n"
+		<< "Enter [15] to print the tree\n"
+		<< "Enter [16] to output the count of rotates\n"
+		"Enter [0] to exit\n"
+		"Enter [-1] to clean console\n";
 	cout << "Your choice: ";
 }
 int main() {
 	binarySearchTree* binaryTree = new binarySearchTree;
 	balansedSearchTree* balansedTree = new balansedSearchTree;
+	AVLTree* avlTree = new AVLTree;
+	int sizeBalansedTree=0;
 	short menu;
 	bool flag = true;
 	printMenu(true);
+	string nameOfFileBinary;
 	while (flag) {
 
 		cin >> menu;
@@ -63,7 +69,6 @@ int main() {
 			break;
 		}
 		case 3: {
-			string nameOfFileBinary;
 			short index;
 			cout << "Input the name of your binary file: ";
 			cin >> nameOfFileBinary;
@@ -77,7 +82,14 @@ int main() {
 			string nameOfFileBinary;
 			cout << "Input the name of your binary file: ";
 			cin >> nameOfFileBinary;
-			addObjectToFile(nameOfFileBinary);
+			company_struct companyObject;
+			cout << "Input license: ";
+			cin >> companyObject.license;
+			cout << "Input name: ";
+			cin >> companyObject.company_name;
+			cout << "Input founder: ";
+			cin >> companyObject.founder;
+			addObjectToFile(nameOfFileBinary,companyObject);
 			break;
 		}
 		case 5: {
@@ -88,7 +100,6 @@ int main() {
 			break;
 		}
 		case 6: {
-			string nameOfFileBinary;
 			cout << "Input the name of your binary file: ";
 			cin >> nameOfFileBinary;
 			binaryTree->buildFromFile(binaryTree->getRoot(), nameOfFileBinary);
@@ -103,11 +114,18 @@ int main() {
 			cout << "Input founder: ";
 			cin >> companyObject.founder;
 			TreeNode* root = binaryTree->getRoot();
-			binaryTree->addItem(root, &companyObject);
+			binaryTree->addItem(root, &companyObject,0);
+			addObjectToFile(nameOfFileBinary, companyObject);
 			break;
 		}
 		case 8: {
-			
+			string key;
+			cout << "Input the key: ";
+			cin >> key;
+			TreeNode* result = binaryTree->searchElement(binaryTree->getRoot(), key);
+
+			printTreeObject(result);
+
 			break;
 		}
 		case 9: {
@@ -115,25 +133,59 @@ int main() {
 			break;
 		}
 		case 10: {
-			TreeNode* root = binaryTree->getRoot();
-			binaryTree->printTree(root, nullptr, false);
+			outputTree(binaryTree->getRoot(), binaryTree->getCountOfELements());
 			break;
 		}
 		case 11: {
-			int size;
-			cout << "Input the size of your tree: ";
-			cin >> size;
-			string nameOfFileBinary;
 			cout << "Input the name of your binary file: ";
 			cin >> nameOfFileBinary;
-			balansedTree->setRoot(balansedTree->buildFromFile(balansedTree->getRoot(),nameOfFileBinary,size,0));
-			outputTree(balansedTree->getRoot(), 8);
+			avlTree->buildFromFile(avlTree->getRoot(),nameOfFileBinary,0);
+			break;
+		}
+		case 12: {
+			company_struct companyObject;
+			cout << "Input license: ";
+			cin >> companyObject.license;
+			cout << "Input name: ";
+			cin >> companyObject.company_name;
+			cout << "Input founder: ";
+			cin >> companyObject.founder;
+			TreeNode* root = avlTree->getRoot();
+			avlTree->addItem(root, &companyObject,0);
+			addObjectToFile(nameOfFileBinary, companyObject);
+			break;
+		}
+		case 13: {
+			string key;
+			cout << "Input the key: ";
+			cin >> key;
+			TreeNode* result = avlTree->searchElement(avlTree->getRoot(), key);
+			if (result == nullptr)
+				cout << "The object was not found:<"<<endl;
+			else printTreeObject(result);
 			break;
 		}
 		case 14: {
-/*			TreeNode* root = balansedTree->getRoot();
-			balansedTree->printTree(root, nullptr, false);
-			break;*/ 
+			string key;
+			cout << "Input the key: ";
+			cin >> key;
+			avlTree->deleteElement(avlTree->getRoot(), key);
+			break;
+		}
+		case 15: {
+			outputTree(avlTree->getRoot(), avlTree->heightTree);
+			break;
+
+		}
+		case 16: {
+			nameOfFileBinary = "5.bin";
+			TEST_BuildTree_ByDeafult_ReturnsTrue(avlTree, nameOfFileBinary);
+			break;
+		}
+		case 0: exit(0);
+		case -1: {
+			system("cls");
+			break;
 		}
 		}
 		printMenu(false);
