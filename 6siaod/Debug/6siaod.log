@@ -1,0 +1,6 @@
+﻿  Graph.cpp
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\6siaod\Graph.cpp(48,23): warning C4018: '<': signed/unsigned mismatch
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\6siaod\Graph.cpp(56,24): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  Generating Code...
+  6siaod.vcxproj -> D:\source\SIAOD_PRACTICE_WORKS_2Crse\6siaod\Debug\6siaod.exe
