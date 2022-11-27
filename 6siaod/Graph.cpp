@@ -1,5 +1,6 @@
 
 #include "Graph.h"
+#include <iomanip>
 
 map<char, vector<graphNode*>> Graph::getGraphRelations() {
 	return this->graphRelations;
@@ -57,9 +58,6 @@ void Graph::fillTheGraph(int graphSize) {
 			cout << "Input the " << j+1 << " relation:";
 			cin >> relation->edgeValue >> relation->secondNodeName;
 			this->addRelation(currentNode, relation);
-			/*secondNoderelation->edgeValue = relation->edgeValue;
-			secondNoderelation->secondNodeName = currentNode;
-			this->addRelation(relation->secondNodeName, secondNoderelation);*/
 			relation = new graphNode;
 		}
 	}
@@ -92,4 +90,75 @@ bool Graph::isAllOdd() {
 			return false;
 	}
 	return true;
+}
+bool Graph::edgeExists(char currentNode, graphNode* secondNode) {
+	auto it = find(this->graphRelations[currentNode].begin(), this->graphRelations[currentNode].end(), secondNode);
+	if (it == this->graphRelations[currentNode].end())
+		return false;
+	return true;
+}
+char Graph::findUnvisited(map<char, bool>& visited,char currentNode) {
+
+	vector<graphNode*> currentNodeRelations = this->graphRelations[currentNode];
+
+	for (graphNode* node : currentNodeRelations) {
+		if (visited[node->secondNodeName])
+			continue;
+		else {
+			return node->secondNodeName;
+		}
+	}
+	return currentNode;
+}
+void Graph::DFSSpanning(char currentNode, map<char, bool>& visited, stack<char>& spanningTree,char start) {
+	for (graphNode* node : this->graphRelations[currentNode]) {
+		if (this->graphRelations.size() == spanningTree.size()) return;
+		if (node->secondNodeName != start) {
+			visited[currentNode] = true;
+			if (visited[node->secondNodeName] == false && edgeExists(currentNode, node)) {
+				spanningTree.push(currentNode);
+				DFSSpanning(node->secondNodeName, visited, spanningTree, currentNode);
+			}
+			else {
+				if (visited[node->secondNodeName]) {
+					char top = spanningTree.top();
+					spanningTree.push(currentNode);
+					char unvisitedVertice = findUnvisited(visited, top);
+					if (unvisitedVertice == top)
+						return;
+					DFSSpanning(unvisitedVertice, visited, spanningTree, top);
+				}
+			}
+		}
+		else {
+			if (!visited[currentNode] && this->graphRelations[currentNode].size()==1) spanningTree.push(currentNode);
+			continue;
+		}
+	}
+}
+vector<char> convertToVector(stack<char>& spanningTree){
+	vector<char> spanTree;
+	while (spanningTree.size()!=0) {
+		spanTree.push_back(spanningTree.top());
+		spanningTree.pop();
+	}
+	return spanTree;
+}
+//bool findInVector(vector<graphNode*> searchVector, char searchElement) {
+//	auto it = find(searchVector.begin(), searchVector.end(), searchElement);
+//	return it == searchVector.end() ? false : true;
+//}
+void Graph::printSpanningTree(stack<char> spanningTree) {
+	char currentNode;
+	vector<char> outputHandler = convertToVector(spanningTree);
+	int size = outputHandler.size();
+	int tabs = -4;
+	for (int i = 0; i < size ; i++) {
+		tabs += 4;
+		if (i == size-1)
+			cout << endl << setw(tabs) <<right <<outputHandler[size - i - 1];
+		else
+			cout << endl <<setw(tabs) << right <<outputHandler[size - i - 1] << "|---";
+	}
+	cout << endl;
 }

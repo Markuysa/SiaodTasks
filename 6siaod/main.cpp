@@ -11,8 +11,8 @@ void printMenu(bool condition)
 		<< "Enter [2] to insert a node.\n"
 		<< "Enter [3] to print the graph.\n"
 		<< "Enter [4] to search eulerian cycle.\n"
-		<< "Enter [5] to search the skeleton tree\n"
-		<< "Enter [6] to output the skeleton tree\n"
+		<< "Enter [5] to search the spanning tree\n"
+		<< "Enter [6] to output the spanning tree\n"
 		<< "Enter [0] to exit\n";
 	cout << "Your choice: ";
 }
@@ -23,6 +23,7 @@ int main() {
 	printMenu(true);
 	bool flag = true;
 	Graph* graph = new Graph;
+	stack<char> spanningTree;
 	while (flag) {
 		cin >> menu;
 		switch (menu) {
@@ -42,11 +43,10 @@ int main() {
 			cout << "Enter the relation ";
 			cin >> relation->edgeValue >> relation->secondNodeName;
 			graph->addRelation(currentNode, relation);
-			// уточнить
-			/*graphNode* relation2 = new graphNode;
+			graphNode* relation2 = new graphNode;
 			relation2->edgeValue = relation->edgeValue;
 			relation2->secondNodeName = currentNode;
-			graph->addRelation(relation->secondNodeName, relation2);*/
+			graph->addRelation(relation->secondNodeName, relation2);
 			break;
 		}
 		case 3: {
@@ -69,11 +69,22 @@ int main() {
 			break;
 		}
 		case 5: {
+			map<char, bool> visited;
 
+			char currentNode;
+			cout << "Enter the start Node: ";
+			cin >> currentNode;
+			graph->DFSSpanning(currentNode, visited, spanningTree,currentNode);
+			
 			break;
 		}
 		case 6: {
-
+			if (!spanningTree.empty()) {
+				graph->printSpanningTree(spanningTree);
+			}
+			else {	
+				cout<<"The tree is empty!"<<endl;
+			}
 			break;
 		}
 		case 0: {
