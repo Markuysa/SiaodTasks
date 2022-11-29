@@ -1,4 +1,8 @@
-#include "LZ78.h"
+#include <vector>
+#include <string>
+#include <list>
+#include <iostream>
+using namespace std;
 string RLE(string line) {
 
 	char firstLetter = line[0];

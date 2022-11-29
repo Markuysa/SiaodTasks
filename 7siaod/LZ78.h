@@ -38,6 +38,13 @@ vector <LZ78Node> LZ78Compress(string& uncompressedString) {
 		counter++;
 	}
 	return encoded;
+}
 
+void printLZ78(vector <LZ78Node> encoded) {
 
+	for (auto i : encoded) {
+
+		cout << "<" << i.index << ";" << "C(" << i.codeword.back()<<")>"<<endl;
+
+	}
 }

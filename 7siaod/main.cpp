@@ -1,4 +1,4 @@
-#include "Huffman.h"
+#include "Test.h"
 int main() {
 
 
@@ -8,16 +8,12 @@ int main() {
     string a = "bcaadddccacacac";
     string ac = "abcdabcabcdaabcabce";
 
-    //vector <LZ78Node> result = LZ78Compress(ac);
-    //for (auto i : result) {
-    //    cout << i.codeword << " " << i.index<<endl;
-
-    //}
-    map<char,int> result = formHuffmanList(a);
-    vector<HuffmanNode> result2 = convertMap(result);
+    //ShannonFanoTree tree;
+    //ShannonFanoNode* root = tree.getRoot();
+    //tree.fillFrequencyDict(a);
+    //cout<<tree.encode(a);
     HuffmanTree tree;
-    tree.buildHuffmansTree(result2);
-     tree.formDictionary(result);
-    return 0;
 
+    tree.buildHuffmansTree(ab);
+    
 }

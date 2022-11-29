@@ -146,6 +146,7 @@
     <ClInclude Include="LZ77.h" />
     <ClInclude Include="LZ78.h" />
     <ClInclude Include="RLE.h" />
+    <ClInclude Include="ShannonFano.h" />
     <ClInclude Include="Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

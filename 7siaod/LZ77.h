@@ -1,4 +1,4 @@
-#include "Test.h"
+#include "RLE.h"
 
 struct LZNODE {
 	int offset;
@@ -22,7 +22,7 @@ bool findInLAB(string& searchString, string& SB) {
 
 vector<LZNODE> LZ77Compress(string& uncompressedString) {
 	vector<LZNODE> resultVector;
-	int WINDOW_SIZE = 13;
+	int WINDOW_SIZE = 14;
 	int sbSize, labSize;
 	int length = 0, offset = 0, findPos;
 	char next;
@@ -54,8 +54,16 @@ vector<LZNODE> LZ77Compress(string& uncompressedString) {
 		if (SB.size() > sbSize)
 			SB = SB.substr(SB.size() - sbSize, sbSize);
 		LZNODE node(offset, length, next);
+		resultVector.push_back(node);
 		position += labPosition;
 		labPosition = 1;
 	}
 	return resultVector;
+}
+void printLZ77(vector <LZNODE> encoded) {
+
+	for (auto i : encoded) {
+		cout << "<" << i.offset << ";" << i.length << ';' << "C(" <<  i.next << ")>" << endl;
+
+	}
 }

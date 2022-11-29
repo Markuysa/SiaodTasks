@@ -32,19 +32,28 @@ class HuffmanTree {
 	vector<HuffmanTreeNode*> huffmanTree;
 	HuffmanTreeNode* root;
 public:
-	void buildHuffmansTree(vector<HuffmanNode> huffmanVector);
+	void buildHuffmansTree(string& uncompressedLine);
 	map <char, string> formDictionary(map<char, int> HuffmanDict);
 	string findByCharacter(char character, map<char, int> HuffmanDict, HuffmanTreeNode* root);
+	map<char, int> formHuffmanList(string& uncompressedString);
+	vector<HuffmanNode> convertMap(map<char, int> HuffmanMap);
+	string encode(string& uncompressedString);
 };
 
+string HuffmanTree::encode(string& uncompressedString) {
 
+	this->buildHuffmansTree(uncompressedString);
+
+
+
+}
 
 
 bool compareStructs(HuffmanNode& first, HuffmanNode& second) {
 
 	return first.frequency < second.frequency;
 }
-vector<HuffmanNode> convertMap(map<char, int> HuffmanMap) {
+vector<HuffmanNode> HuffmanTree::convertMap(map<char, int> HuffmanMap) {
 	vector<HuffmanNode> result;
 	for (auto i : HuffmanMap) {
 		HuffmanNode node( i.second, i.first );
@@ -53,7 +62,7 @@ vector<HuffmanNode> convertMap(map<char, int> HuffmanMap) {
 	sort(result.begin(), result.end(),compareStructs);
 	return result;
 }
-map<char,int> formHuffmanList(string& uncompressedString){
+map<char,int> HuffmanTree::formHuffmanList(string& uncompressedString){
 	map<char, int> result;
 	int index = 0;
 	while (index<uncompressedString.size()) {
@@ -63,14 +72,16 @@ map<char,int> formHuffmanList(string& uncompressedString){
 	return result;
 }
 
-void HuffmanTree::buildHuffmansTree(vector<HuffmanNode> HuffmanVector) {
-
+void HuffmanTree::buildHuffmansTree(string& uncompressedLine) {
+	map<char, int> result = this->formHuffmanList(uncompressedLine);
+	vector<HuffmanNode> HuffmanVector = this->convertMap(result);
 	for (int i = 0; i < HuffmanVector.size()-1;i++) {
 		int data;
 		HuffmanTreeNode* right;
 		HuffmanTreeNode* left;
 		HuffmanTreeNode* temp1 = new HuffmanTreeNode;
 		HuffmanTreeNode* temp2 = new HuffmanTreeNode;
+		bool isNode;
 		if (this->huffmanTree.size() == 0) {
 			temp1->character = HuffmanVector.at(i).character;
 			temp1->data = HuffmanVector.at(i).frequency;
@@ -97,27 +108,34 @@ void HuffmanTree::buildHuffmansTree(vector<HuffmanNode> HuffmanVector) {
 	}
 	this->root = huffmanTree.back();
 }
-int counter = 0;
+
 string HuffmanTree::findByCharacter(char character, map<char, int> HuffmanDict, HuffmanTreeNode* root) {
 
 	string result = "";
-	if (root == nullptr || root->right == nullptr || root->left == nullptr) return "";
-	if (root->character == character) return result;
-	if (root->right->data >= HuffmanDict[character]) {
-		result += '1';
-		findByCharacter(character, HuffmanDict, root->right);
-	}
-	else {
-		result += '0';
-		findByCharacter(character, HuffmanDict, root->left);
+	int size = this->huffmanTree.size();
+	HuffmanTreeNode* next = this->huffmanTree.at(size-1);
+	for (size_t i = size - 2; i >= 0; i--) {
+		if (next == nullptr) return result;
+		if (next->right!=nullptr && HuffmanDict[character]>=next->right->data) {
+			result += '1';
+			if (next->right->data == HuffmanDict[character]) return result;
+			next = next->right;
+		}
+		else {
+			result += '0';
+			if (next->left!= nullptr && next->left->data == HuffmanDict[character]) return result;
+			next = next->left;
+		}
+
+
 	}
 }
 map <char, string> HuffmanTree::formDictionary(map<char, int> HuffmanDict) {
 
 	map<char, string> result;
-	string resultString = "";
+	string resultString;
 	for (auto i : HuffmanDict) {
-		this->findByCharacter(i.second, HuffmanDict, this->root);
+		resultString = this->findByCharacter(i.first, HuffmanDict, this->root);
 		result[i.first] = resultString;
 	}
 	return result;

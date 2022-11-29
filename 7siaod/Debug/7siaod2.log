@@ -1,9 +1,11 @@
 ﻿  main.cpp
-D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod2\LZ77.h(35,18): warning C4018: '<': signed/unsigned mismatch
-D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod2\LZ77.h(54,17): warning C4018: '>': signed/unsigned mismatch
-D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod2\LZ77.h(27,30): warning C4101: 'findPos': unreferenced local variable
-D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod2\LZ78.h(25,18): warning C4018: '<': signed/unsigned mismatch
-D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod2\Huffman.h(59,14): warning C4018: '<': signed/unsigned mismatch
-D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod2\Huffman.h(68,20): warning C4018: '<': signed/unsigned mismatch
-D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod2\Huffman.h(114): warning C4715: 'HuffmanTree::findByCharacter': not all control paths return a value
-  7siaod2.vcxproj -> D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod2\Debug\7siaod2.exe
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\LZ77.h(35,18): warning C4018: '<': signed/unsigned mismatch
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\LZ77.h(54,17): warning C4018: '>': signed/unsigned mismatch
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\LZ77.h(27,30): warning C4101: 'findPos': unreferenced local variable
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\LZ78.h(25,18): warning C4018: '<': signed/unsigned mismatch
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\Huffman.h(61,14): warning C4018: '<': signed/unsigned mismatch
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\Huffman.h(71,20): warning C4018: '<': signed/unsigned mismatch
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\Huffman.h(77,8): warning C4101: 'isNode': unreferenced local variable
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\ShannonFano.h(106,20): warning C4018: '<': signed/unsigned mismatch
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\Huffman.h(125): warning C4715: 'HuffmanTree::findByCharacter': not all control paths return a value
+  7siaod2.vcxproj -> D:\source\SIAOD_PRACTICE_WORKS_2Crse\7siaod\Debug\7siaod2.exe
