@@ -9,9 +9,15 @@ struct LZ78Node {
 	}
 
 };
+string encode(vector <LZ78Node> encoded) {
+	string resultString = "";
+	for (auto i : encoded) {
 
-
-vector <LZ78Node> LZ78Compress(string& uncompressedString) {
+		resultString += "<" + to_string(i.index) + ";" + i.codeword.back() + ">";
+	}
+	return resultString;
+}
+string LZ78Compress(string& uncompressedString) {
 	vector <LZ78Node> encoded;
 	map<string, int> entries;
 
@@ -37,14 +43,5 @@ vector <LZ78Node> LZ78Compress(string& uncompressedString) {
 		position++;
 		counter++;
 	}
-	return encoded;
-}
-
-void printLZ78(vector <LZ78Node> encoded) {
-
-	for (auto i : encoded) {
-
-		cout << "<" << i.index << ";" << "C(" << i.codeword.back()<<")>"<<endl;
-
-	}
+	return encode(encoded);
 }

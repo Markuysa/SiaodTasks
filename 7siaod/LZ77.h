@@ -19,8 +19,14 @@ bool findInLAB(string& searchString, string& SB) {
 	}
 	return false;
 }
-
-vector<LZNODE> LZ77Compress(string& uncompressedString) {
+string encodeLZ77(vector<LZNODE> result) {
+	string resString = "";
+	for (auto i : result) {
+		resString+= "<"+ to_string(i.offset) + ";" + to_string(i.length) + ';' + i.next;
+	}
+	return resString;
+}
+string LZ77Compress(string& uncompressedString) {
 	vector<LZNODE> resultVector;
 	int WINDOW_SIZE = 14;
 	int sbSize, labSize;
@@ -58,12 +64,5 @@ vector<LZNODE> LZ77Compress(string& uncompressedString) {
 		position += labPosition;
 		labPosition = 1;
 	}
-	return resultVector;
-}
-void printLZ77(vector <LZNODE> encoded) {
-
-	for (auto i : encoded) {
-		cout << "<" << i.offset << ";" << i.length << ';' << "C(" <<  i.next << ")>" << endl;
-
-	}
+	return encodeLZ77(resultVector);
 }

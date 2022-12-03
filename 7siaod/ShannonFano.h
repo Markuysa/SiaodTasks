@@ -8,28 +8,34 @@ struct ShannonFanoNode {
 
 	ShannonFanoNode* right = nullptr;
 	ShannonFanoNode* left = nullptr;
-	/*ShannonFanoNode() {};*/
-};
 
+};
+struct encodeStructSannon {
+	char letter;
+	string encodeLine;
+};
 class ShannonFanoTree {
 
 	vector< ShannonFanoNode*> ShannonFanoTree;
-	ShannonFanoNode* root=nullptr;
+	ShannonFanoNode* root = nullptr;
 	map<char, double> frequenyDict;
 
 	map<string, string> encodedCharacters;
+	vector<encodeStructSannon> encodedTextShannonFano;
 public:
-	string getCode(string key, ShannonFanoNode* root,string result);
+	string getCode(string key, ShannonFanoNode* root, string result);
 	map<char, double> getFrequencyDict() { return this->frequenyDict; }
 	ShannonFanoNode* getRoot() { return this->root; };
-	ShannonFanoNode* createTree(ShannonFanoNode* root,string characters);
+	ShannonFanoNode* createTree(ShannonFanoNode* root, string characters);
 	void fillFrequencyDict(string& uncompressedLine);
 	void castToTree();
 	void createDecodedDict();
 	ShannonFanoNode* createRoot(string characters);
 	string encode(string& uncompressedString);
+	string decode(string& compressedLine);
 };
 string ShannonFanoTree::encode(string& uncompressedString) {
+	this->fillFrequencyDict(uncompressedString);
 	string result = "";
 	map<char, double> dict = this->getFrequencyDict();
 	for (auto i : dict) {
@@ -40,6 +46,10 @@ string ShannonFanoTree::encode(string& uncompressedString) {
 	string resultEncode = "";
 	for (auto i : uncompressedString) {
 		string str(1, i);
+		encodeStructSannon obj;
+		obj.encodeLine = this->encodedCharacters[string(i, 1)];
+		obj.letter = i;
+		this->encodedTextShannonFano.push_back(obj);
 		resultEncode += this->encodedCharacters[str];
 	}
 	return resultEncode;
@@ -55,10 +65,10 @@ void ShannonFanoTree::createDecodedDict() {
 }
 bool findInString(string& searchString, string& key) {
 
-	return searchString.find(key) != std::string::npos ?true:false;
+	return searchString.find(key) != std::string::npos ? true : false;
 }
-string ShannonFanoTree::getCode(string key,ShannonFanoNode* root, string result) {
-	
+string ShannonFanoTree::getCode(string key, ShannonFanoNode* root, string result) {
+
 	if (root == nullptr) return result;
 	if (root->character == key) return result;
 
@@ -71,10 +81,10 @@ string ShannonFanoTree::getCode(string key,ShannonFanoNode* root, string result)
 		return getCode(key, root->left, result);
 	}
 	return result;
-	
+
 }
 
-bool sortStruct(ShannonFanoNode* first , ShannonFanoNode* second) {
+bool sortStruct(ShannonFanoNode* first, ShannonFanoNode* second) {
 
 	return first->frequency > second->frequency;
 
@@ -89,7 +99,7 @@ void ShannonFanoTree::castToTree() {
 	sort(this->ShannonFanoTree.begin(), this->ShannonFanoTree.end(), sortStruct);
 
 }
-void ShannonFanoTree::fillFrequencyDict(string &uncompressedLine) {
+void ShannonFanoTree::fillFrequencyDict(string& uncompressedLine) {
 	map <char, int> frequencies;
 	for (auto i : uncompressedLine) {
 		frequencies[i] += 1;
@@ -102,26 +112,26 @@ void ShannonFanoTree::fillFrequencyDict(string &uncompressedLine) {
 }
 ShannonFanoNode* ShannonFanoTree::createRoot(string characters) {
 	ShannonFanoNode* root = new ShannonFanoNode();
-	
+
 	for (int i = 0; i < characters.size(); i++) {
 		root->frequency += this->frequenyDict[characters[i]];
-		}
+	}
 	root->character = characters;
 
 	return root;
 }
-ShannonFanoNode* ShannonFanoTree::createTree(ShannonFanoNode* root,string characters) {
+ShannonFanoNode* ShannonFanoTree::createTree(ShannonFanoNode* root, string characters) {
 	string right, left;
 	if (root == nullptr) {
 		root = createRoot(characters);
 	}
 	if (root->character.size() % 2 == 0) {
-		right = root->character.substr(0,root->character.size()/2);
-		left = root->character.substr(root->character.size() / 2,root->character.size()/2);
+		right = root->character.substr(0, root->character.size() / 2);
+		left = root->character.substr(root->character.size() / 2, root->character.size() / 2);
 	}
 	else {
 		if (root->character.size() == 1) return root;
-		right = root->character.substr(0, root->character.size() / 2);	
+		right = root->character.substr(0, root->character.size() / 2);
 		left = root->character.substr(root->character.size() / 2, root->character.size() / 2 + 1);
 	}
 	root->right = createTree(root->right, right);
@@ -131,5 +141,11 @@ ShannonFanoNode* ShannonFanoTree::createTree(ShannonFanoNode* root,string charac
 	return root;
 }
 
-
+string ShannonFanoTree::decode(string& compressedLine) {
+	string result = "";
+	for (auto i : this->encodedTextShannonFano) {
+		result += i.letter;
+	}
+	return result;
+}
 
