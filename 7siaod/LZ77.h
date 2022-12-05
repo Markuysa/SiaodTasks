@@ -22,13 +22,13 @@ bool findInLAB(string& searchString, string& SB) {
 string encodeLZ77(vector<LZNODE> result) {
 	string resString = "";
 	for (auto i : result) {
-		resString+= "<"+ to_string(i.offset) + ";" + to_string(i.length) + ';' + i.next;
+		resString+= "<"+ to_string(i.offset) + ";" + to_string(i.length) + ';' + i.next+">";
 	}
 	return resString;
 }
 string LZ77Compress(string& uncompressedString) {
 	vector<LZNODE> resultVector;
-	int WINDOW_SIZE = 14;
+	int WINDOW_SIZE = 50;
 	int sbSize, labSize;
 	int length = 0, offset = 0, findPos;
 	char next;
@@ -45,14 +45,6 @@ string LZ77Compress(string& uncompressedString) {
 			searchString += LAB[labPosition];
 			labPosition++;
 		}
-		//string check = string(1, LAB[labPosition]);
-		//if (findInLAB(check, SB)) {
-		//	while (findInLAB(check, SB)) {
-		//		check += LAB[labPosition];
-		//		labPosition++;
-		//	}
-		//}
-		//searchString += check;
 		next = searchString[searchString.size() - 1];
 		length = searchString.size() - 1;
 		offset = length == 0 ? 0 : SB.size() - SB.rfind(searchString.substr(0, searchString.size() - 1));

@@ -42,6 +42,7 @@ string LZ78Compress(string& uncompressedString) {
 		encoded.push_back(node);
 		position++;
 		counter++;
+		index = 0;
 	}
 	return encode(encoded);
 }

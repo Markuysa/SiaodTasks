@@ -8,11 +8,6 @@ struct ShannonFanoNode {
 
 	ShannonFanoNode* right = nullptr;
 	ShannonFanoNode* left = nullptr;
-
-};
-struct encodeStructSannon {
-	char letter;
-	string encodeLine;
 };
 class ShannonFanoTree {
 
@@ -20,20 +15,44 @@ class ShannonFanoTree {
 	ShannonFanoNode* root = nullptr;
 	map<char, double> frequenyDict;
 
-	map<string, string> encodedCharacters;
-	vector<encodeStructSannon> encodedTextShannonFano;
+
+	vector<encodeStruuct> encodedTextShannonFano;
 public:
+
+	map<string, string> encodedCharacters;
 	string getCode(string key, ShannonFanoNode* root, string result);
 	map<char, double> getFrequencyDict() { return this->frequenyDict; }
 	ShannonFanoNode* getRoot() { return this->root; };
 	ShannonFanoNode* createTree(ShannonFanoNode* root, string characters);
 	void fillFrequencyDict(string& uncompressedLine);
+	void fillFrequencyDictFIle(string& nameOfFile);
 	void castToTree();
 	void createDecodedDict();
 	ShannonFanoNode* createRoot(string characters);
 	string encode(string& uncompressedString);
 	string decode(string& compressedLine);
+	string encodeFromFile(string& nameOfFile);
+	
 };
+string ShannonFanoTree::encodeFromFile(string& nameOfFile) {
+
+	fstream filea(nameOfFile);
+	std::string content((std::istreambuf_iterator<char>(filea)),
+		(std::istreambuf_iterator<char>()));
+	filea.close();
+	return this->encode(content);
+	
+}
+void outputTree(HuffmanTreeNode* p, int level)
+{
+	if (p)
+	{
+		outputTree(p->left, level + 1);
+		for (int i = 0; i < level; i++) cout << "   ";
+		cout << p->character << endl;
+		outputTree(p->right, level + 1);
+	}
+}
 string ShannonFanoTree::encode(string& uncompressedString) {
 	this->fillFrequencyDict(uncompressedString);
 	string result = "";
@@ -42,11 +61,11 @@ string ShannonFanoTree::encode(string& uncompressedString) {
 		result += i.first;
 	}
 	this->createTree(root, result);
-	this->createDecodedDict();
+	this->createDecodedDict();	
 	string resultEncode = "";
 	for (auto i : uncompressedString) {
 		string str(1, i);
-		encodeStructSannon obj;
+		encodeStruuct obj;
 		obj.encodeLine = this->encodedCharacters[string(i, 1)];
 		obj.letter = i;
 		this->encodedTextShannonFano.push_back(obj);
@@ -61,7 +80,6 @@ void ShannonFanoTree::createDecodedDict() {
 		character.push_back(i.first);
 		this->encodedCharacters[character] = getCode(character, root, "");
 	}
-
 }
 bool findInString(string& searchString, string& key) {
 

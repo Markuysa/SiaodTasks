@@ -2,6 +2,7 @@
 #include <string>
 #include <list>
 #include <iostream>
+#include <fstream>
 using namespace std;
 string RLE(string line) {
 
