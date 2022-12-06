@@ -1,5 +1,5 @@
 ﻿  main.cpp
-C:\Users\TravelMate\source\SIAOD_PRACTICE_WORKS_2Crse\5siaod\ControlFIleModule.h(62): warning C4172: returning address of local variable or temporary: companyObject
-C:\Users\TravelMate\source\SIAOD_PRACTICE_WORKS_2Crse\5siaod\AVLTree.h(43): warning C4715: 'AVLTree::balanseDifference': not all control paths return a value
-C:\Users\TravelMate\source\SIAOD_PRACTICE_WORKS_2Crse\5siaod\AVLTree.h(53): warning C4715: 'AVLTree::searchElement': not all control paths return a value
-  5siaod.vcxproj -> C:\Users\TravelMate\source\SIAOD_PRACTICE_WORKS_2Crse\5siaod\Debug\5siaod.exe
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\5siaod\ControlFIleModule.h(62): warning C4172: returning address of local variable or temporary: companyObject
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\5siaod\AVLTree.h(43): warning C4715: 'AVLTree::balanseDifference': not all control paths return a value
+D:\source\SIAOD_PRACTICE_WORKS_2Crse\5siaod\AVLTree.h(53): warning C4715: 'AVLTree::searchElement': not all control paths return a value
+  5siaod.vcxproj -> D:\source\SIAOD_PRACTICE_WORKS_2Crse\5siaod\Debug\5siaod.exe

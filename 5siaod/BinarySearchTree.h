@@ -23,12 +23,15 @@ public:
 	TreeNode* addItem(TreeNode* &root, company_struct* insertObject,int position);
 	void buildFromFile(TreeNode* root, string& nameOfFile);
 	TreeNode* getRoot() { return root; };
+	void setRoot(TreeNode* root) { this->root = root; };
 	TreeNode* createRoot(string& license,int position) {
 		this->root = new TreeNode(license,nullptr,nullptr,position);
 		return this->root;
 	}
 	TreeNode* searchElement(TreeNode* root, string& key);
 	int getCountOfELements() { return this->count_elements; }
+	TreeNode* DeleteNode(TreeNode* node, string key);
+
 };
 
 bool isExist(TreeNode* root, string& keyValue) {
@@ -86,7 +89,48 @@ void outputTree(TreeNode* p, int level)
 	{
 		outputTree(p->left, level + 1);
 		for (int i = 0; i < level; i++) cout << "   ";
-		cout << p->key << endl;
+		/*if (p->key!="ob8")*/
+			cout << p->key << endl;
 		outputTree(p->right, level + 1);
 	}
+}
+
+TreeNode* binarySearchTree::DeleteNode(TreeNode* node, string key) {
+	if (node == nullptr)
+		return node;
+
+	if (key == node->key) {
+
+		TreeNode* tmp;
+		if (node->right == nullptr)
+			tmp = node->left;
+		else {
+
+			TreeNode* ptr = node->right;
+			if (ptr->left == nullptr) {
+				ptr->left = node->left;
+				tmp = ptr;
+			}
+			else {
+
+				TreeNode* pmin = ptr->left;
+				while (pmin->left != nullptr) {
+					ptr = pmin;
+					pmin = ptr->left;
+				}
+				ptr->left = pmin->right;
+				pmin->left = node->left;
+				pmin->right = node->right;
+				tmp = pmin;
+			}
+		}
+
+		delete node;
+		return tmp;
+	}
+	else if (key > node->key)
+		node->left = DeleteNode(node->left, key);
+	else
+		node->right = DeleteNode(node->right, key);
+	return node;
 }

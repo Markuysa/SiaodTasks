@@ -86,7 +86,6 @@ void printObject(company_struct* companyObject) {
 		<< founder << '\n';
 }
 
-// Что значит по известному адресу епт
 
 void printBinaryFile(string& nameOfFile) {
 

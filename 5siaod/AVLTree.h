@@ -51,12 +51,6 @@ TreeNode* AVLTree::searchElement(TreeNode* root, string& key)
 	if (root->key.compare(key)==0)
 		return root;
 }
-void deleteElements(TreeNode* root) {
-	if (root == nullptr) return;
-	deleteElements(root->left);
-	deleteElements(root->right);
-	delete root;
-}
 TreeNode* getMin(TreeNode* root,string& key) {
 	if (root == nullptr) return nullptr;
 	string key2 = root->key;
@@ -65,8 +59,8 @@ TreeNode* getMin(TreeNode* root,string& key) {
 		key2 = key;
 		result = root;
 	}
-	getMin(root->right,key);
-	getMin(root->left,key);
+	getMin(root->right,key2);
+	getMin(root->left,key2);
 	return result;
 }
 TreeNode* AVLTree::deleteMin(TreeNode* root) {
@@ -86,14 +80,16 @@ TreeNode* AVLTree::deleteElement(TreeNode* root, string& key)
 		TreeNode* left = root->left;
 		TreeNode* right = root->right;
 
-		delete root;
-
-		if (right == nullptr)
+		if (right == nullptr) {
 			return left;
+			delete root;
+		}
 		else {
-			TreeNode* minNode = getMin(root->right,root->key);
+			TreeNode* minNode = getMin(root->right, root->key);
+			if (minNode == nullptr) minNode = root->right;
 			minNode->right = deleteMin(root->right);
 			minNode->left = left;
+			delete root;
 			return balanseTree(minNode);
 		}
 
@@ -155,7 +151,7 @@ TreeNode* AVLTree::leftRightRotate(TreeNode*& root) {
 
 }
 TreeNode* AVLTree::balanseTree(TreeNode* &root) {
-	cout << sizeof(root);
+	//cout << sizeof(root);
 	if (balanseDifference(root)== 2) {
 		if (balanseDifference(root->left) == 1) {
 			root= smallLeftRotate(root);

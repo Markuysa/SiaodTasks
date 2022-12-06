@@ -1,4 +1,5 @@
 #include "Tests.h"
+#include <time.h>
 void printMenu(bool condition)
 {
 	if (condition) {
@@ -60,8 +61,13 @@ int main() {
 			cin >> nameOfFileBinary;
 			cout << "Input the key: ";
 			cin >> key;
+
+			clock_t start = clock();
 			company_struct* object = findByKey(nameOfFileBinary, key);
-			printObject(object);
+			clock_t end = clock();
+			double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+			cout << "The worktime: " << seconds << endl;
+			//printObject(object);
 			if (object==nullptr) {
 				cout << "Your object was not found" << endl;
 				break;
@@ -122,14 +128,21 @@ int main() {
 			string key;
 			cout << "Input the key: ";
 			cin >> key;
+			clock_t start = clock();
 			TreeNode* result = binaryTree->searchElement(binaryTree->getRoot(), key);
-
-			printTreeObject(result);
+			clock_t end = clock();
+			double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+			cout << "The worktime: " << seconds << endl;
+			//printTreeObject(result);
 
 			break;
 		}
 		case 9: {
-			//delete
+			cout << "Enter the key: " << endl;
+			string key;
+			cin >> key;
+			binaryTree->setRoot(binaryTree->DeleteNode(binaryTree->getRoot(), key));
+
 			break;
 		}
 		case 10: {
@@ -159,17 +172,22 @@ int main() {
 			string key;
 			cout << "Input the key: ";
 			cin >> key;
+			clock_t start = clock();
 			TreeNode* result = avlTree->searchElement(avlTree->getRoot(), key);
+			clock_t end = clock();
+			double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+			cout << "The worktime: " << seconds << endl;
 			if (result == nullptr)
 				cout << "The object was not found:<"<<endl;
 			else printTreeObject(result);
+
 			break;
 		}
 		case 14: {
 			string key;
 			cout << "Input the key: ";
 			cin >> key;
-			avlTree->deleteElement(avlTree->getRoot(), key);
+			//avlTree->deleteElement(avlTree->getRoot(), key);
 			break;
 		}
 		case 15: {

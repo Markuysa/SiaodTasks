@@ -5,6 +5,29 @@ void TestAVLSearch() {
 
 
 }
+void TestSearchLinear(string& key,string& nameOfFile) {
+	company_struct* object = findByKey(nameOfFile, key);
+	if (object == nullptr)
+		assert("Error");
+	else
+		assert("Success");
+}	
+void TestSearchBinary(string& key,TreeNode* root) {
+	binarySearchTree tree;
+	TreeNode* object = tree.searchElement(root,key);
+	if (object == nullptr)
+		assert("Error");
+	else
+		assert("Success");
+}
+void TestSearchAVL(string& key, TreeNode* root) {
+	AVLTree tree;
+	TreeNode* object = tree.searchElement(root, key);
+	if (object == nullptr)
+		assert("Error");
+	else
+		assert("Success");
+}
 bool testOrder(TreeNode* root) {
 	if (root == nullptr) return false;
 	if (root->left > root->right) {
