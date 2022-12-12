@@ -26,9 +26,8 @@ void showTrunks(Trunk* p)
 	cout << p->str;
 }
 
-
 bool isNumber(char element) {
-	return element >= '0' && element <= '9' ? true : false;
+	return element >= '0' && element <= '9' || element >='a' && element<='z' ? true : false;
 }
 //structure of one node in the tree
 struct Node {
@@ -41,13 +40,21 @@ struct Node {
 		this->right = right;
 	}
 };
+
+void outputTree(Node* p, int level)
+{
+	if (p)
+	{
+		outputTree(p->left, level + 1);
+		for (int i = 0; i < level; i++) cout << "   ";
+		cout << p->data << endl;
+		outputTree(p->right, level + 1);
+	}
+}
 class ExpressionTree {
-
-	//stack that is used to form the tree
-	
-
 public:
 	stack<Node> tree;
+	int level = 0;
 	Node* createNode(char data, Node* left, Node* right);
 
 	void createTree(string& expression);
@@ -60,7 +67,7 @@ Node* ExpressionTree::createNode(char data, Node* left, Node* right) {
 	return &newNode;
 }
 // form our tree
-inline void ExpressionTree::createTree(string& expression) {
+void ExpressionTree::createTree(string& expression) {
 	for (size_t i = 0; i < expression.size(); i++) {
 		//creating a new node for our tree
 		Node* newNode = createNode(expression[i], nullptr, nullptr);
@@ -85,7 +92,6 @@ inline void ExpressionTree::createTree(string& expression) {
 		
 	}
 }
-
 
 
 void printTree(Node* root, Trunk* prev, bool isLeft)

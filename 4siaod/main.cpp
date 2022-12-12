@@ -30,7 +30,6 @@ int main() {
 			cout << "Enter the expression: ";
 			cin >> expression;
 			expression = infixToPostfix(expression);
-			cout << expression;
 			break;
 		}
 		case 2: {
@@ -43,7 +42,8 @@ int main() {
 			break;
 		}
 		case 4: {
-			printTree(&expressionTree.tree.top(), nullptr, false);
+			/*printTree(&expressionTree.tree.top(), nullptr, false);*/
+			outputTree(&expressionTree.tree.top(),9);
 			break;
 		}
 		default:

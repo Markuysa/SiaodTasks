@@ -8,7 +8,7 @@ using namespace std;
 map <char, int> priority = { {'*',3},{'/',3},{'+',4},{'-',4},{'^',6} };
 
 bool isOperand(char c) {
-    return (c >= '0' && c <= '9');
+    return (c >= '0' && c <= '9' || c>='a' && c<='z');
 }
 
 string infixToPostfix(string infix)
